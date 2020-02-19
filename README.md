@@ -28,7 +28,7 @@ git clone git@github.com:udacity/CppND-Route-Planning-Project.git --recurse-subm
   cmake --config Debug "-DCMAKE_BUILD_TYPE=Debug" ..
   cmake --build 
   sudo make install.
-```
+  ```
 
 ## Compiling and Running
 
