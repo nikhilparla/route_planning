@@ -21,14 +21,15 @@ git clone git@github.com:udacity/CppND-Route-Planning-Project.git --recurse-subm
     * libpng12-dev is already the newest version (1.2.54-1ubuntu1.1)
   Cmake installation
   ```
-  * git clone --recurse-submodules https://github.com/cpp-io2d/P0267_RefImpl
-  * cd P0267_RefImpl
-  * mkdir Debug
-  * cd Debug
-  * cmake --config Debug "-DCMAKE_BUILD_TYPE=Debug" ..
-  * cmake --build 
-  * sudo make install.
+  git clone --recurse-submodules https://github.com/cpp-io2d/P0267_RefImpl
+  cd P0267_RefImpl
+  mkdir Debug
+  cd Debug
+  cmake --config Debug "-DCMAKE_BUILD_TYPE=Debug" ..
+  cmake --build 
+  sudo make install.
 ```
+
 ## Compiling and Running
 
 ### Compiling
