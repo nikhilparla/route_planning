@@ -7,3 +7,4 @@ build/
 bin/
 lib/
 thirdparty/io2d
+.vscode/

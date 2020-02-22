@@ -19,7 +19,7 @@ git clone git@github.com:udacity/CppND-Route-Planning-Project.git --recurse-subm
     * ImageMagick is a free and open-source software suite for displaying, creating, converting, modifying, and editing raster images.
   * Install libpng: sudo apt install libpng-dev
     * libpng12-dev is already the newest version (1.2.54-1ubuntu1.1)
-  Cmake installation
+### Cmake installation
   ```
   git clone --recurse-submodules https://github.com/cpp-io2d/P0267_RefImpl
   cd P0267_RefImpl
