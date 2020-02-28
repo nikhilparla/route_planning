@@ -35,14 +35,14 @@ float RoutePlanner::CalculateHValue(RouteModel::Node const *node) {
 
 void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
     static float gval=0;
-    gval++;
     current_node->FindNeighbors();
     for( auto each_node : current_node->neighbors)
     {
         // each_node is a Node * pointer
         each_node->parent = current_node;
         each_node->h_value = CalculateHValue(each_node);
-        each_node->g_value = gval;
+        //each_node->g_value = gval;
+        each_node->g_value = current_node->g_value + current_node->distance(*each_node);
         open_list.push_back(each_node);
         each_node->visited = true;
     }
@@ -63,7 +63,7 @@ bool Compare(const RouteModel::Node* a, const RouteModel::Node* b) {
  * Sort the two-dimensional vector of ints in descending order.
  */
 void CellSort(std::vector<RouteModel::Node*> v) {
-  sort(v.begin(), v.end(), Compare);
+  std::sort(v.begin(), v.end(), Compare);
 }
 
 
@@ -117,15 +117,17 @@ std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node 
 // - When the search has reached the end_node, use the ConstructFinalPath method to return the final path that was found.
 // - Store the final path in the m_Model.path attribute before the method exits. This path will then be displayed on the map tile.
 
-void RoutePlanner::AStarSearch() {
+void RoutePlanner::AStarSearch()
+{
     RouteModel::Node *current_node = nullptr;
-
+    std::cout << "inside AStarSearch function" << std::endl;
+    current_node = start_node;
     // TODO: Implement your solution here.
     while (current_node != end_node)
     {
         /* code */
-    AddNeighbors(current_node);
-    current_node = NextNode();
+        AddNeighbors(current_node);
+        current_node = NextNode();
     }
     m_Model.path = ConstructFinalPath(current_node);
 }
