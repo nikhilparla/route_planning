@@ -1,5 +1,6 @@
 #include "route_planner.h"
 #include <algorithm>
+#include <assert.h>
 
 RoutePlanner::RoutePlanner(RouteModel &model, float start_x, float start_y, float end_x, float end_y): m_Model(model) {
     // Convert inputs to percentage:
@@ -41,7 +42,6 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
         // each_node is a Node * pointer
         each_node->parent = current_node;
         each_node->h_value = CalculateHValue(each_node);
-        //each_node->g_value = gval;
         each_node->g_value = current_node->g_value + current_node->distance(*each_node);
         open_list.push_back(each_node);
         each_node->visited = true;
@@ -102,7 +102,8 @@ std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node 
         path_found.push_back(*current_node);
         current_node = current_node->parent;
     }
-    path_found.push_back(*current_node);    
+    path_found.push_back(*current_node);
+    std::reverse(path_found.begin(),path_found.end());     
 
     distance *= m_Model.MetricScale(); // Multiply the distance by the scale of the map to get meters.
     return path_found;
@@ -119,15 +120,20 @@ std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node 
 
 void RoutePlanner::AStarSearch()
 {
+    start_node->visited = true;
+    open_list.push_back(start_node);
+
     RouteModel::Node *current_node = nullptr;
-    std::cout << "inside AStarSearch function" << std::endl;
-    current_node = start_node;
-    // TODO: Implement your solution here.
-    while (current_node != end_node)
+    
+    while (!open_list.empty())
     {
         /* code */
-        AddNeighbors(current_node);
         current_node = NextNode();
+        if (current_node == end_node)
+        {
+            m_Model.path = ConstructFinalPath(current_node);
+            return;
+        }else
+            AddNeighbors(current_node);
     }
-    m_Model.path = ConstructFinalPath(current_node);
 }
