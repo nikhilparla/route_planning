@@ -35,7 +35,6 @@ float RoutePlanner::CalculateHValue(RouteModel::Node const *node) {
 // - For each node in current_node.neighbors, add the neighbor to open_list and set the node's visited attribute to true.
 
 void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
-    static float gval=0;
     current_node->FindNeighbors();
     for( auto each_node : current_node->neighbors)
     {
@@ -62,8 +61,8 @@ bool Compare(const RouteModel::Node* a, const RouteModel::Node* b) {
 /**
  * Sort the two-dimensional vector of ints in descending order.
  */
-void CellSort(std::vector<RouteModel::Node*> v) {
-  std::sort(v.begin(), v.end(), Compare);
+void CellSort(std::vector<RouteModel::Node*>* v) {
+  std::sort(v->begin(), v->end(), Compare);
 }
 
 
@@ -75,7 +74,7 @@ void CellSort(std::vector<RouteModel::Node*> v) {
 // - Return the pointer.
 
 RouteModel::Node *RoutePlanner::NextNode() {
-    CellSort(open_list);
+    CellSort(&open_list);
     auto current = open_list.back();
     open_list.pop_back();
     return current;
